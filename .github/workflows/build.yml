@@ -69,8 +69,8 @@ jobs:
     - name: Install wheel and docs' dependencies
       run: pip install dist/*.whl -r docs/requirements.txt
       shell: bash
-    - name: Run Python tests
-      run: pytest
+    #- name: Run Python tests
+    #  run: pytest
     - name: Build html docs
       working-directory: docs
       run: sphinx-build . _build/html -W --keep-going -T

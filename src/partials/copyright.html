@@ -37,9 +37,9 @@
 
   {%- if commit %}
     {%- if commit_url %}
-      <a href="{{ commit_url }}">{{ commit }}</a>
+      <a href="{{ commit_url }}">{{ commit[0:8] }}</a>
     {%- else %}
-      <i>{{ commit }}</i>
+      <i>{{ commit[0:8] }}</i>
     {%- endif %}
     {%- if build_id %}
       {%- if build_url %}

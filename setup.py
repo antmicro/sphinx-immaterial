@@ -156,7 +156,7 @@ class StaticBundlesCommand(setuptools.command.build_py.build_py):
             install_google_fonts(
                 files(resources),
                 files(resources),
-                DEFAULT_THEME_OPTIONS["font"].values()
+                DEFAULT_THEME_OPTIONS["font"].values(),
             )
             tgt = target[self.bundle_type]
             node_modules_path = os.path.join(root_dir, "node_modules")
@@ -200,7 +200,7 @@ setuptools.setup(
             "custom_admonitions.css",
             "theme.conf",
             "resources/*.response",
-            "resources/*/*.response"
+            "resources/*/*.response",
         ],
         "sphinx_immaterial.apidoc.cpp.cppreference_data": ["*.xml"],
     },

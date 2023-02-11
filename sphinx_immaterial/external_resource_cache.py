@@ -3,6 +3,7 @@ import json
 import os
 import tempfile
 from typing import Dict, Optional
+from importlib.resources import files
 
 import appdirs
 import requests
@@ -10,7 +11,6 @@ import sphinx.application
 import sphinx.config
 import sphinx.util.logging
 
-from importlib.resources import files
 from sphinx_immaterial import resources
 
 logger = sphinx.util.logging.getLogger(__name__)
@@ -31,8 +31,7 @@ def get_url(
         with open(str(mod_res_path), "rb") as f:
             return f.read()
     except FileNotFoundError:
-        print(f'Failed to load file from module:  {mod_res_path}')
-        pass
+        print(f"Failed to load file from module:  {mod_res_path}")
 
     # Secondly, look at the cache
     resp_path = os.path.join(cache_dir, f"{req_key}.response")

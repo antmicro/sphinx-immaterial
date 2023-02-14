@@ -32,7 +32,7 @@ import setuptools.command.install
 import setuptools.command.sdist
 from sphinx_immaterial.google_fonts import install_google_fonts
 
-from importlib.resources import files
+from importlib_resources import files
 from sphinx_immaterial import resources
 
 from sphinx_immaterial import DEFAULT_THEME_OPTIONS

@@ -3,7 +3,7 @@ import json
 import os
 import tempfile
 from typing import Dict, Optional
-from importlib.resources import files
+from importlib_resources import files
 
 import appdirs
 import requests

@@ -5,3 +5,4 @@ pydantic-extra-types
 typing-extensions
 appdirs
 requests
+importlib-resources

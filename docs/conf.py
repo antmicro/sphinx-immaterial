@@ -587,7 +587,7 @@ class TestColor(SphinxRole):
         )
         node = docutils.nodes.raw(
             self.rawtext,
-            f'<button {color_attr} style='
+            f"<button {color_attr} style="
             f'"{el_style}" onclick="{click_func}">{self.text}</button>',
             format="html",
         )

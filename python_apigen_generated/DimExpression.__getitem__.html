@@ -32,9 +32,9 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.247a40c14d4fe5de2.min.css" />
-        <link rel="stylesheet" type="text/css" href="../_static/extra_css.css" />
-        <link rel="stylesheet" type="text/css" href="../_static/custom_font_example.css" />
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.774a8fc06f7b933a7.min.css?v=5089ae25" />
+        <link rel="stylesheet" type="text/css" href="../_static/extra_css.css?v=f9ade0d0" />
+        <link rel="stylesheet" type="text/css" href="../_static/custom_font_example.css?v=520ac564" />
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1266,7 +1266,7 @@ addition of an <a class="reference external" href="https://docs.python.org/3/lib
 </dd>
 </dl>
 <p class="example rubric">Examples</p>
-<h2 id="integer-indexing">Integer indexing<a class="headerlink" href="#integer-indexing" title="Permalink to this heading">¶</a></h2>
+<h2 id="integer-indexing">Integer indexing<a class="headerlink" href="#integer-indexing" title="Link to this heading">¶</a></h2>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">IndexTransform</span><span class="p">(</span><span class="n">input_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">[</span><span class="n">ts</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">]]</span>
 <span class="go">Rank 2 -&gt; 3 index space transform:</span>
@@ -1298,7 +1298,7 @@ addition of an <a class="reference external" href="https://docs.python.org/3/lib
 <span class="go">    out[2] = 0 + 1 * in[0]</span>
 </code></pre></div>
 </div>
-<h2 id="interval-indexing">Interval indexing<a class="headerlink" href="#interval-indexing" title="Permalink to this heading">¶</a></h2>
+<h2 id="interval-indexing">Interval indexing<a class="headerlink" href="#interval-indexing" title="Link to this heading">¶</a></h2>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">IndexTransform</span><span class="p">(</span><span class="n">input_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span><span class="p">[</span><span class="n">ts</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">:</span><span class="mi">10</span><span class="p">]]</span>
 <span class="go">Rank 3 -&gt; 3 index space transform:</span>
@@ -1360,7 +1360,7 @@ dimensions:</p>
 <span class="go">    out[2] = 0 + 1 * in[2]</span>
 </code></pre></div>
 </div>
-<h2 id="adding-singleton-dimensions">Adding singleton dimensions<a class="headerlink" href="#adding-singleton-dimensions" title="Permalink to this heading">¶</a></h2>
+<h2 id="adding-singleton-dimensions">Adding singleton dimensions<a class="headerlink" href="#adding-singleton-dimensions" title="Link to this heading">¶</a></h2>
 <p>Specifying a value of <code class="code highlight python docutils literal highlight-python"><span class="n">newaxis</span></code> (equal to <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>) adds a new
 dummy/singleton dimension with implicit bounds
 <span class="math notranslate nohighlight">\([0, 1)\)</span>:</p>
@@ -1423,7 +1423,7 @@ label:</p>
 </code></pre></div>
 </div>
 </div>
-<h2 id="ellipsis">Ellipsis<a class="headerlink" href="#ellipsis" title="Permalink to this heading">¶</a></h2>
+<h2 id="ellipsis">Ellipsis<a class="headerlink" href="#ellipsis" title="Link to this heading">¶</a></h2>
 <p>Specifying the special <a class="reference external" href="https://docs.python.org/3/library/constants.html#Ellipsis" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ellipsis</span></code></a> value (<code class="code highlight python docutils literal highlight-python"><span class="o">...</span></code>) is equivalent to
 specifying as many full slices <code class="code highlight python docutils literal highlight-python"><span class="p">:</span></code> as needed to consume the remaining
 selected dimensions not consumed by other indexing terms:</p>
@@ -1455,7 +1455,7 @@ selected dimensions not consumed by other indexing terms:</p>
 <span class="go">    out[3] = 0 + 1 * in[3]</span>
 </code></pre></div>
 </div>
-<h2 id="integer-array-indexing">Integer array indexing<a class="headerlink" href="#integer-array-indexing" title="Permalink to this heading">¶</a></h2>
+<h2 id="integer-array-indexing">Integer array indexing<a class="headerlink" href="#integer-array-indexing" title="Link to this heading">¶</a></h2>
 <p>Specifying an <code class="code highlight python docutils literal highlight-python"><span class="n">array_like</span></code> <em>index array</em> of integer values selects the
 coordinates given by the elements of the array of the selected dimension:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ts</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
@@ -1502,7 +1502,7 @@ dimensions are not well-defined for dimension expressions:</p>
 <span class="go">})</span>
 </code></pre></div>
 </div>
-<h2 id="boolean-array-indexing">Boolean array indexing<a class="headerlink" href="#boolean-array-indexing" title="Permalink to this heading">¶</a></h2>
+<h2 id="boolean-array-indexing">Boolean array indexing<a class="headerlink" href="#boolean-array-indexing" title="Link to this heading">¶</a></h2>
 <p>Specifying an <code class="code highlight python docutils literal highlight-python"><span class="n">array_like</span></code> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a> values is equivalent to
 specifying a sequence of integer index arrays containing the
 coordinates of <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a> values (in C order), e.g. as obtained from
@@ -1589,7 +1589,7 @@ added to the beginning of the result domain, i.e. exactly the behavior of
   <small>
     
       Last update:
-      Jul 16, 2023
+      Aug 22, 2023
     
   </small>
 </div>
@@ -1666,7 +1666,7 @@ added to the beginning of the result domain, i.e. exactly the behavior of
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    7.0.1.
+    7.2.2.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1704,8 +1704,8 @@ added to the beginning of the result domain, i.e. exactly the behavior of
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top", "search.share", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": [], "title": "ReadTheDocs", "version": "https://sphinx-immaterial.rtfd.io"}, {"aliases": [], "title": "Github Pages", "version": "https://jbms.github.io/sphinx-immaterial"}], "versionPath": null}}</script>
     
       
-        <script src="../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
-        <script id="MathJax-script" src="../_static/mathjax/tex-mml-chtml.js"></script>
+        <script src="../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js?v=14bafe8d"></script>
+        <script id="MathJax-script" src="../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

@@ -12,7 +12,7 @@ import io
 import json
 import os
 import re
-from typing import Dict, List, Set, Tuple, Optional
+from typing import Dict, List, Set, Tuple, Optional, cast, Any
 import urllib.parse
 
 import sphinx.application
@@ -23,9 +23,6 @@ from .css_and_javascript_bundles import add_global_css
 from .external_resource_cache import get_url, get_cache_dir
 
 logger = sphinx.util.logging.getLogger(__name__)
-
-# From Google Fonts API Explorer
-_GOOGLE_FONTS_API_KEY = "AIzaSyAa8yy0GdcGPHdtD083HiGGx_S0vMPScDM"
 
 # https://stackoverflow.com/questions/25011533/google-font-api-uses-browser-detection-how-to-get-all-font-variations-for-font
 _FONT_FORMAT_USER_AGENT = {
@@ -55,7 +52,8 @@ def _adjust_css_urls(css_content: bytes, renamed_fonts: Dict[str, str]) -> str:
     )
 
 
-_MAX_CONCURRENT_FETCHES = 128
+_MAX_CONCURRENT_FETCHES_KEY = "sphinx_immaterial_font_fetch_max_workers"
+_MAX_CONCURRENT_FETCHES_ENV_KEY = "SPHINX_IMMATERIAL_FONT_FETCH_MAX_WORKERS"
 
 _TTF_FONT_PATHS_KEY = "sphinx_immaterial_ttf_font_paths"
 
@@ -79,9 +77,19 @@ def install_google_fonts(cache_dir: str, font_dir: str, fonts: List[str]):
     fonts : List[str]
         List of fonts to save
     """
+    max_workers = 128
+    if _MAX_CONCURRENT_FETCHES_ENV_KEY in os.environ:
+        try:
+            max_workers = int(os.environ[_MAX_CONCURRENT_FETCHES_ENV_KEY])
+        except ValueError:
+            logger.warning(
+                "Environment variable, %s, must be an integer value.",
+                _MAX_CONCURRENT_FETCHES_ENV_KEY,
+            )
+    # _static path
     os.makedirs(font_dir, exist_ok=True)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=33) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
 
         def to_thread(fn, *args, **kwargs) -> asyncio.Future:
             return asyncio.wrap_future(executor.submit(fn, *args, **kwargs))
@@ -158,13 +166,13 @@ def install_google_fonts(cache_dir: str, font_dir: str, fonts: List[str]):
             css_futures = []
             # Fetch list of fonts
             font_metadata = json.loads(
-                get_url(
-                    cache_dir,
-                    f"https://content-webfonts.googleapis.com/v1/webfonts?key={_GOOGLE_FONTS_API_KEY}",
-                    headers={"x-referer": "https://explorer.apis.google.com"},
-                ).decode("utf-8")
+                get_url(cache_dir, "https://fonts.google.com/metadata/fonts").decode(
+                    "utf-8"
+                )
             )
-            font_families = {item["family"]: item for item in font_metadata["items"]}
+            font_families = {
+                item["family"]: item for item in font_metadata["familyMetadataList"]
+            }
             for font in fonts:
                 metadata = font_families.get(font)
                 if metadata is None:
@@ -174,7 +182,9 @@ def install_google_fonts(cache_dir: str, font_dir: str, fonts: List[str]):
                         sorted(font_families),
                     )
                     continue
-                for variant in metadata["variants"]:
+                for variant in cast(
+                    Dict[str, Dict[str, Any]], metadata["fonts"]
+                ).keys():
                     css_future_keys.append((font, variant))
                     css_futures.append(fetch_font(font, variant))
             css_content = dict(zip(css_future_keys, await asyncio.gather(*css_futures)))
@@ -224,6 +234,9 @@ def _builder_inited(app: sphinx.application.Sphinx):
 def setup(app: sphinx.application.Sphinx):
     app.setup_extension("sphinx_immaterial.external_resource_cache")
     app.connect("builder-inited", _builder_inited)
+    app.add_config_value(
+        _MAX_CONCURRENT_FETCHES_KEY, default=128, rebuild="", types=int
+    )
 
     return {
         "parallel_read_safe": True,

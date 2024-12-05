@@ -86,7 +86,6 @@ class IndexBuilder(sphinx.search.IndexBuilder):
                 objtype_entry = onames[typeindex]
                 domain_name = objtype_entry[0]
                 objtype = objtype_entry[1]
-                domain = self.env.domains[domain_name]
 
                 docname = docindex_to_docname.get(docindex)
 
@@ -163,11 +162,13 @@ class IndexBuilder(sphinx.search.IndexBuilder):
         return result
 
     def load(
-        self, stream: IO, format: Any  # pylint: disable=redefined-builtin
+        self,
+        stream: IO,
+        fformat: Any,
     ) -> None:
-        if isinstance(format, str):
-            format = self.formats[format]
-        frozen = format.load(stream)
+        if isinstance(fformat, str):
+            fformat = self.formats[fformat]
+        frozen = fformat.load(stream)
         # Reconstruct `docnames` and `filenames` from `docurls` since they are
         # expected by `IndexBuilder`.
         builder = self.env.app.builder
@@ -186,19 +187,19 @@ class IndexBuilder(sphinx.search.IndexBuilder):
         for url in docurls:
             docname = url_to_docname.get(url, None)
             if docname is None:
-                docnames.append(url)
-                filenames.append(url)
+                docnames.append(str(url))
+                filenames.append(str(url))
             else:
-                docnames.append(docname)
-                filenames.append(self.env.doc2path(docname, False))
+                docnames.append(str(docname))
+                filenames.append(str(self.env.doc2path(docname, False)))
         frozen["docnames"] = docnames
         frozen["filenames"] = filenames
-        new_data = format.dumps(frozen)
+        new_data = fformat.dumps(frozen)
         if isinstance(new_data, str):
             stream = io.StringIO(new_data)
         else:
             stream = io.BytesIO(new_data)
-        super().load(stream, format)
+        super().load(stream, fformat)
 
 
 def _monkey_patch_index_builder():

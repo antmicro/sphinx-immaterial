@@ -32,8 +32,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.342d6c02f0947aa3c.min.css?v=8427b539" />
-        <link rel="stylesheet" type="text/css" href="../_static/extra_css.css?v=f9ade0d0" />
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.116bfe6baf097be33.min.css?v=ee6a936f" />
+        <link rel="stylesheet" type="text/css" href="../_static/extra_css.css?v=15999537" />
         <link rel="stylesheet" type="text/css" href="../_static/custom_font_example.css?v=520ac564" />
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -796,6 +796,22 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theme_result.html" class="md-nav__link">
+        <span class="md-ellipsis">Showcasing</span>
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -839,9 +855,10 @@
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">import</span> <span class="nn">_abc</span>
 
-<span class="kn">from</span> <span class="nn">._tensorstore</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">._tensorstore</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># noqa: F403</span>
+
+<span class="c1"># fmt: off</span>
 
 
 <div class="viewcode-block" id="Dim">
@@ -1076,6 +1093,8 @@
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
+    <span class="n">size_alias</span> <span class="o">=</span> <span class="n">size</span>
+
     <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">pass</span></div>
 
@@ -1572,8 +1591,8 @@
 <span class="sd">            })</span>
 
 <span class="sd">        More generally, specifying an ``n``-dimensional `bool` array is equivalent to</span>
-<span class="sd">        specifying ``n`` 1-dimensional index arrays, where the ``i``\ th index array specifies</span>
-<span class="sd">        the ``i``\ th coordinate of the `True` values:</span>
+<span class="sd">        specifying ``n`` 1-dimensional index arrays, where the ``i``\\ th index array specifies</span>
+<span class="sd">        the ``i``\\ th coordinate of the `True` values:</span>
 
 <span class="sd">            &gt;&gt;&gt; x = ts.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]],</span>
 <span class="sd">            ...              dtype=ts.int32)</span>
@@ -1890,8 +1909,8 @@
 <span class="sd">          :python:`dims[i] = self.labels.index(other.labels[i])`.  It is an</span>
 <span class="sd">          error if no such dimension exists.</span>
 
-<span class="sd">       2. Otherwise, ``i`` is the ``j``\ th unlabeled dimension of :python:`other`</span>
-<span class="sd">          (left to right), and :python:`dims[i] = k`, where ``k`` is the ``j``\ th</span>
+<span class="sd">       2. Otherwise, ``i`` is the ``j``\\ th unlabeled dimension of :python:`other`</span>
+<span class="sd">          (left to right), and :python:`dims[i] = k`, where ``k`` is the ``j``\\ th</span>
 <span class="sd">          unlabeled dimension of :python:`self` (left to right).  It is an error</span>
 <span class="sd">          if no such dimension exists.</span>
 
@@ -2193,7 +2212,7 @@
   <small>
     
       Last update:
-      Mar 01, 2024
+      Dec 05, 2024
     
   </small>
 </div>
@@ -2234,7 +2253,7 @@
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    7.2.6.
+    8.1.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -2272,7 +2291,7 @@
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.expand", "navigation.sections", "navigation.top", "search.share", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": [], "title": "ReadTheDocs", "version": "https://sphinx-immaterial.rtfd.io"}, {"aliases": [], "title": "Github Pages", "version": "https://jbms.github.io/sphinx-immaterial"}], "versionPath": null}}</script>
     
       
-        <script src="../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js?v=14bafe8d"></script>
+        <script src="../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=9a299579"></script>
     
   </body>
 </html>

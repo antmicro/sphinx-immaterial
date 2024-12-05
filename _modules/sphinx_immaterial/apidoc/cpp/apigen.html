@@ -32,8 +32,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_immaterial_theme.342d6c02f0947aa3c.min.css?v=8427b539" />
-        <link rel="stylesheet" type="text/css" href="../../../../_static/extra_css.css?v=f9ade0d0" />
+        <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx_immaterial_theme.116bfe6baf097be33.min.css?v=ee6a936f" />
+        <link rel="stylesheet" type="text/css" href="../../../../_static/extra_css.css?v=15999537" />
         <link rel="stylesheet" type="text/css" href="../../../../_static/custom_font_example.css?v=520ac564" />
     <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -796,6 +796,22 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../theme_result.html" class="md-nav__link">
+        <span class="md-ellipsis">Showcasing</span>
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -977,7 +993,7 @@
     <span class="n">env</span><span class="p">:</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">BuildEnvironment</span><span class="p">,</span> <span class="n">warn</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CppApiData</span><span class="p">:</span>
     <span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;_sphinx_immaterial_cpp_apigen_data&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">KEY</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">app</span><span class="p">,</span> <span class="n">KEY</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">data</span>
 
@@ -1015,13 +1031,13 @@
                     <span class="n">location</span><span class="o">=</span><span class="n">api_parser</span><span class="o">.</span><span class="n">json_location_to_string</span><span class="p">(</span><span class="n">diag</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]),</span>
                 <span class="p">)</span>
 
-    <span class="nb">setattr</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">KEY</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">app</span><span class="p">,</span> <span class="n">KEY</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data</span>
 
 
 <span class="k">def</span> <span class="nf">_transform_doc_comment</span><span class="p">(</span>
     <span class="n">env</span><span class="p">:</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">environment</span><span class="o">.</span><span class="n">BuildEnvironment</span><span class="p">,</span>
-    <span class="n">doc</span><span class="p">:</span> <span class="n">api_parser</span><span class="o">.</span><span class="n">JsonDocComment</span><span class="p">,</span>
+    <span class="n">doc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">api_parser</span><span class="o">.</span><span class="n">JsonDocComment</span><span class="p">],</span>
     <span class="n">summary</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">docutils</span><span class="o">.</span><span class="n">statemachine</span><span class="o">.</span><span class="n">StringList</span><span class="p">]:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">doc</span><span class="p">:</span>
@@ -1319,7 +1335,7 @@
     <span class="n">summary</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">state</span><span class="p">:</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">states</span><span class="o">.</span><span class="n">RSTState</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">kind</span> <span class="o">=</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span>
+    <span class="c1"># kind = entity[&quot;kind&quot;]</span>
     <span class="n">out</span> <span class="o">=</span> <span class="n">docutils</span><span class="o">.</span><span class="n">statemachine</span><span class="o">.</span><span class="n">StringList</span><span class="p">()</span>
     <span class="n">location</span> <span class="o">=</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span>
     <span class="n">parent_id</span> <span class="o">=</span> <span class="n">entity</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
@@ -1329,12 +1345,12 @@
         <span class="n">include_scope</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">if</span> <span class="n">parent_id</span><span class="p">:</span>
-        <span class="n">parent</span> <span class="o">=</span> <span class="n">api_data</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">parent_id</span><span class="p">]</span>
+        <span class="c1"># parent = api_data.entities[parent_id]</span>
         <span class="n">scope_template_prefix</span> <span class="o">=</span> <span class="n">_format_template_prefix</span><span class="p">(</span>
             <span class="n">api_data</span><span class="p">,</span> <span class="n">api_data</span><span class="o">.</span><span class="n">entities</span><span class="p">[</span><span class="n">parent_id</span><span class="p">],</span> <span class="n">summary</span><span class="o">=</span><span class="kc">False</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># parent = None</span>
         <span class="n">scope_template_prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
     <span class="n">scope</span> <span class="o">=</span> <span class="n">api_data</span><span class="o">.</span><span class="n">get_entity_scope</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
@@ -1473,7 +1489,7 @@
     <span class="n">obj_content</span><span class="p">:</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">addnodes</span><span class="o">.</span><span class="n">desc_content</span><span class="p">,</span>
     <span class="n">state</span><span class="p">:</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">states</span><span class="o">.</span><span class="n">RSTState</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">parent_object_name</span> <span class="o">=</span> <span class="n">api_data</span><span class="o">.</span><span class="n">get_entity_object_name</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
+    <span class="c1"># parent_object_name = api_data.get_entity_object_name(entity)</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">entity</span><span class="p">[</span><span class="s2">&quot;enumerators&quot;</span><span class="p">]:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
         <span class="n">location</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span>
@@ -1487,7 +1503,6 @@
         <span class="p">)</span>
         <span class="n">anchor</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;e-</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">child_doc</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="s2">&quot;doc&quot;</span><span class="p">]</span>
-        <span class="k">assert</span> <span class="n">child_doc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">sphinx_utils</span><span class="o">.</span><span class="n">append_directive_to_stringlist</span><span class="p">(</span>
             <span class="n">out</span><span class="p">,</span>
             <span class="s2">&quot;cpp:enumerator&quot;</span><span class="p">,</span>
@@ -1602,7 +1617,7 @@
         <span class="n">section</span> <span class="o">=</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">section</span><span class="p">()</span>
         <span class="n">section</span><span class="p">[</span><span class="s2">&quot;ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Sphinx treates the first child of a `section` node as the title,</span>
+        <span class="c1"># Sphinx treats the first child of a `section` node as the title,</span>
         <span class="c1"># regardless of its type.  We use a comment node to avoid adding a title</span>
         <span class="c1"># that would be redundant with the object description.</span>
         <span class="n">comment_placeholder</span> <span class="o">=</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">comment</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -1789,7 +1804,7 @@
     <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span>
         <span class="s2">&quot;cpp_apigen_case_insensitive_filesystem&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">types</span><span class="o">=</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span>
+        <span class="n">types</span><span class="o">=</span><span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span>  <span class="c1"># type: ignore[arg-type]</span>
         <span class="n">rebuild</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">app</span><span class="o">.</span><span class="n">add_config_value</span><span class="p">(</span>
@@ -1806,7 +1821,7 @@
   <small>
     
       Last update:
-      Mar 01, 2024
+      Dec 05, 2024
     
   </small>
 </div>
@@ -1847,7 +1862,7 @@
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    7.2.6.
+    8.1.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1885,7 +1900,7 @@
     <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.expand", "navigation.sections", "navigation.top", "search.share", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": [], "title": "ReadTheDocs", "version": "https://sphinx-immaterial.rtfd.io"}, {"aliases": [], "title": "Github Pages", "version": "https://jbms.github.io/sphinx-immaterial"}], "versionPath": null}}</script>
     
       
-        <script src="../../../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js?v=14bafe8d"></script>
+        <script src="../../../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=9a299579"></script>
     
   </body>
 </html>

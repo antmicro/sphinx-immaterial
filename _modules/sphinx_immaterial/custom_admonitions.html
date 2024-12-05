@@ -32,8 +32,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.342d6c02f0947aa3c.min.css?v=8427b539" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra_css.css?v=f9ade0d0" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.116bfe6baf097be33.min.css?v=ee6a936f" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra_css.css?v=15999537" />
         <link rel="stylesheet" type="text/css" href="../../_static/custom_font_example.css?v=520ac564" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -796,6 +796,22 @@
   
 
     
+      
+      
+      
+
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme_result.html" class="md-nav__link">
+        <span class="md-ellipsis">Showcasing</span>
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -833,6 +849,7 @@
 <h1>Source code for sphinx_immaterial.custom_admonitions</h1><div class="highlight"><pre>
 <span></span><code><span class="sd">&quot;&quot;&quot;This module inherits from the generic ``admonition`` directive and makes the</span>
 <span class="sd">title optional.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">PurePath</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -842,6 +859,7 @@
 <span class="kn">import</span> <span class="nn">jinja2</span>
 <span class="kn">import</span> <span class="nn">pydantic</span>
 <span class="kn">from</span> <span class="nn">pydantic_extra_types.color</span> <span class="kn">import</span> <span class="n">Color</span>
+<span class="kn">import</span> <span class="nn">sphinx</span>
 <span class="kn">import</span> <span class="nn">sphinx.addnodes</span>
 <span class="kn">from</span> <span class="nn">sphinx.application</span> <span class="kn">import</span> <span class="n">Sphinx</span>
 <span class="kn">from</span> <span class="nn">sphinx.config</span> <span class="kn">import</span> <span class="n">Config</span>
@@ -851,7 +869,6 @@
 <span class="kn">from</span> <span class="nn">sphinx.locale</span> <span class="kn">import</span> <span class="n">admonitionlabels</span><span class="p">,</span> <span class="n">_</span>
 <span class="kn">from</span> <span class="nn">sphinx.util.logging</span> <span class="kn">import</span> <span class="n">getLogger</span>
 <span class="kn">from</span> <span class="nn">sphinx.writers.html5</span> <span class="kn">import</span> <span class="n">HTML5Translator</span>
-<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
 <span class="kn">from</span> <span class="nn">.css_and_javascript_bundles</span> <span class="kn">import</span> <span class="n">add_global_css</span>
 <span class="kn">from</span> <span class="nn">.inline_icons</span> <span class="kn">import</span> <span class="n">load_svg_into_builder_env</span><span class="p">,</span> <span class="n">get_custom_icons</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">html_translator_mixin</span>
@@ -875,10 +892,6 @@
 <span class="n">_CUSTOM_ADMONITIONS_KEY</span> <span class="o">=</span> <span class="s2">&quot;sphinx_immaterial_custom_admonitions&quot;</span>
 
 
-<span class="n">CSSClassType</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span>
-    <span class="nb">str</span><span class="p">,</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">AfterValidator</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">make_id</span><span class="p">)</span>
-<span class="p">]</span>
-
 <span class="c1"># defaults used for version directives re-styling</span>
 <span class="n">VERSION_DIR_STYLE</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;versionadded&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -893,6 +906,13 @@
     <span class="p">},</span>
     <span class="s2">&quot;deprecated&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;material/delete&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">203</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">83</span><span class="p">),</span> <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="p">[]},</span>
 <span class="p">}</span>
+<span class="k">if</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># re-use deprecated style for versionremoved directive except with different icon</span>
+    <span class="n">VERSION_DIR_STYLE</span><span class="p">[</span><span class="s2">&quot;versionremoved&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;material/close&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">203</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">83</span><span class="p">),</span>
+        <span class="s2">&quot;classes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}</span>
 
 
 <div class="viewcode-block" id="CustomAdmonitionConfig">
@@ -908,7 +928,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The required name of the directive. This will be also used as a CSS class name.</span>
 <span class="sd">    This value shall have characters that match the regular expression pattern</span>
 <span class="sd">    ``[a-zA-Z0-9_-]``.&quot;&quot;&quot;</span>
-    <span class="n">title</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">validate_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validate_default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;The default title to use when rendering the custom admonition. If this is</span>
 <span class="sd">    not specified, then the `name` value is converted and used.&quot;&quot;&quot;</span>
     <span class="n">icon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -935,7 +955,7 @@
 
 <span class="sd">    .. note:: Any specified transparency (alpha value) is ignored.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">classes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CSSClassType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">classes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;If specified, this list of qualified names will be added to every rendered</span>
 <span class="sd">    admonition (specific to the generated directive) element&#39;s ``class`` attribute.</span>
 
@@ -976,7 +996,16 @@
             <span class="n">val</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[\-_]+&quot;</span><span class="p">,</span> <span class="n">cast</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)))</span>
             <span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">val</span></div>
+
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="nd">@pydantic</span><span class="o">.</span><span class="n">field_validator</span><span class="p">(</span><span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">validate_classes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="n">validated</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">validated</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nodes</span><span class="o">.</span><span class="n">make_id</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">validated</span></div>
 
 
 
@@ -1073,7 +1102,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Derivative of the original version directives to add theme-specific admonition</span>
 <span class="sd">    options&quot;&quot;&quot;</span>
 
-    <span class="n">option_spec</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">option_spec</span> <span class="o">=</span> <span class="p">{</span>  <span class="c1"># type: ignore[misc]</span>
         <span class="s2">&quot;collapsible&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
         <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">class_option</span><span class="p">,</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
@@ -1362,7 +1391,7 @@
   <small>
     
       Last update:
-      Mar 01, 2024
+      Dec 05, 2024
     
   </small>
 </div>
@@ -1403,7 +1432,7 @@
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    7.2.6.
+    8.1.3.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -1441,7 +1470,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.sections", "navigation.top", "search.share", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": [{"aliases": [], "title": "ReadTheDocs", "version": "https://sphinx-immaterial.rtfd.io"}, {"aliases": [], "title": "Github Pages", "version": "https://jbms.github.io/sphinx-immaterial"}], "versionPath": null}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js?v=14bafe8d"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=9a299579"></script>
     
   </body>
 </html>

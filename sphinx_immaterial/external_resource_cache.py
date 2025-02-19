@@ -31,7 +31,7 @@ def get_url(
         with open(str(mod_res_path), "rb") as f:
             return f.read()
     except FileNotFoundError:
-        print(f"Failed to load file from module:  {mod_res_path}")
+        pass
 
     # Secondly, look at the cache
     resp_path = os.path.join(cache_dir, f"{req_key}.response")

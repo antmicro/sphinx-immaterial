@@ -51,6 +51,17 @@ def _get_all_synopses(
 
 
 class IndexBuilder(sphinx.search.IndexBuilder):
+    def __init__(
+        self, env: sphinx.environment.BuildEnvironment, lang: str, options: dict[str, str], scoring: str
+    ) -> None:
+        self.env = env
+        super().__init__(
+            env,
+            lang,
+            options,
+            scoring
+        )
+
     def get_objects(  # type: ignore[override]
         self, fn2index: Dict[str, int]
     ) -> Dict[

@@ -1,5 +1,6 @@
 """Implements the `json` domain and `json:schema` directive."""
 
+import sys
 import dataclasses
 import json
 import os
@@ -51,6 +52,12 @@ from .. import apigen_utils
 logger = sphinx.util.logging.getLogger(__name__)
 
 _SCHEMA_DATA_APP_KEY = "_sphinx_immaterial_json_schema_data"
+
+
+if sys.version_info[:2] >= (3, 11):
+    Ref = docutils.nodes.reference
+else:
+    Ref = docutils.nodes.Element
 
 
 class JsonSchemaMapEntry(NamedTuple):
@@ -1190,7 +1197,7 @@ class JsonSchemaDomain(sphinx.domains.Domain):
         target: str,
         node: sphinx.addnodes.pending_xref,
         contnode: docutils.nodes.Element,
-    ) -> Optional[docutils.nodes.Element]:
+    ) -> Optional[docutils.nodes.reference]:
         del typ
         match = self._find_schema(
             target=target,
@@ -1209,7 +1216,7 @@ class JsonSchemaDomain(sphinx.domains.Domain):
         fromdocname: str,
         contnode: docutils.nodes.Element,
         match: Tuple[str, DomainSchemaEntry],
-    ) -> docutils.nodes.Element:
+    ) -> docutils.nodes.reference:
         full_name, domain_entry = match
         options = object_description_options.get_object_description_options(
             self.env, "json", domain_entry.objtype
@@ -1234,11 +1241,11 @@ class JsonSchemaDomain(sphinx.domains.Domain):
         target: str,
         node: sphinx.addnodes.pending_xref,
         contnode: docutils.nodes.Element,
-    ) -> List[Tuple[str, docutils.nodes.Element]]:
+    ) -> List[Tuple[str, Ref]]:
         match = self._find_schema(
             target=target, parent_schema=node.get("json:schema"), refspecific=True
         )
-        results: List[Tuple[str, docutils.nodes.Element]] = []
+        results: List[Tuple[str, Ref]] = []
         if match is not None:
             results.append(
                 (

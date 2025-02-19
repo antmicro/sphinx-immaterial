@@ -10,13 +10,28 @@
 """
 
 import io
-from typing import cast, Any, Dict, IO, List, Tuple, Union, Optional, Set
+from typing import IO, cast, Any, Dict, List, Tuple, Union, Optional, Set
 
 import sphinx
 import sphinx.search
 import sphinx.application
 import sphinx.builders.html
 import sphinx.util.logging
+
+from typing import Protocol, TypeVar
+
+_T_co = TypeVar("_T_co", covariant=True)
+_T_contra = TypeVar("_T_contra", contravariant=True)
+
+
+class _ReadableStream(Protocol[_T_co]):
+    def read(self, n: int = ..., /) -> _T_co: ...
+    def readline(self, n: int = ..., /) -> _T_co: ...
+
+
+class _WritableStream(Protocol[_T_contra]):
+    def write(self, s: _T_contra, /) -> object: ...
+
 
 logger = sphinx.util.logging.getLogger(__name__)
 
@@ -52,15 +67,14 @@ def _get_all_synopses(
 
 class IndexBuilder(sphinx.search.IndexBuilder):
     def __init__(
-        self, env: sphinx.environment.BuildEnvironment, lang: str, options: dict[str, str], scoring: str
+        self,
+        env: sphinx.environment.BuildEnvironment,
+        lang: str,
+        options: dict[str, str],
+        scoring: str,
     ) -> None:
         self.env = env
-        super().__init__(
-            env,
-            lang,
-            options,
-            scoring
-        )
+        super().__init__(env, lang, options, scoring)
 
     def get_objects(  # type: ignore[override]
         self, fn2index: Dict[str, int]
@@ -174,7 +188,7 @@ class IndexBuilder(sphinx.search.IndexBuilder):
 
     def load(
         self,
-        stream: IO,
+        stream: _ReadableStream[Union[str, bytes]],
         format: Any,
     ) -> None:
         if isinstance(format, str):
@@ -210,7 +224,7 @@ class IndexBuilder(sphinx.search.IndexBuilder):
             stream = io.StringIO(new_data)
         else:
             stream = io.BytesIO(new_data)
-        super().load(stream, format)
+        super().load(cast(IO[Any], stream), format)
 
 
 def _monkey_patch_index_builder():

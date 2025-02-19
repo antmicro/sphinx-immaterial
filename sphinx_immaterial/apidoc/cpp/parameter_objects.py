@@ -34,7 +34,10 @@ class CppParamField(sphinx.util.docfields.GroupedField):
         self,
         types: Dict[str, List[docutils.nodes.Node]],
         domain: str,
-        items: Tuple,
+        items: Union[
+            List[Tuple[str, List[docutils.nodes.Node]]],
+            Tuple[str, List[docutils.nodes.Node]],
+        ],
         env: Optional[sphinx.environment.BuildEnvironment] = None,
         inliner: Optional[docutils.parsers.rst.states.Inliner] = None,
         location: Optional[docutils.nodes.Node] = None,
@@ -43,9 +46,7 @@ class CppParamField(sphinx.util.docfields.GroupedField):
         bodynode["classes"].append("api-field")
         bodynode["classes"].append("highlight")
 
-        def handle_item(
-            fieldarg: str, content: List[docutils.nodes.Node]
-        ) -> docutils.nodes.Node:
+        def handle_item(fieldarg, content) -> docutils.nodes.Node:
             node = docutils.nodes.definition_list_item()
             term_node = docutils.nodes.term()
             m = CPP_PARAM_KIND_PATTERN.fullmatch(fieldarg)

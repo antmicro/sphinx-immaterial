@@ -569,7 +569,15 @@ def _parse_confval_signature(
         default = registry_option.default
         types = registry_option.valid_types
         if isinstance(types, sphinx.config.ENUM):
-            types = (typing.Literal[tuple(types.candidates)],)
+            types = (
+                typing.Literal[
+                    tuple(
+                        types._candidates
+                        if sys.version_info[:2] >= (3, 11)
+                        else types.candidates
+                    )
+                ],
+            )
         if isinstance(types, type):
             types = (types,)
         if types:

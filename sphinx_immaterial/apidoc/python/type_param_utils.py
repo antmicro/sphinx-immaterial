@@ -224,6 +224,7 @@ def _monkey_patch_stringify_annotation_to_support_type_params():
         annotation: typing.Any,
         /,
         mode="fully-qualified-except-typing",
+        short_literals: bool = False,
     ) -> str:
         if (encode := _ENCODE_TYPE_PARAM.get(type(annotation))) is not None:
             return encode(annotation)

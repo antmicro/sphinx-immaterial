@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, List, Tuple, cast, Iterator
 import docutils.nodes
 
@@ -9,6 +10,12 @@ import sphinx.environment
 
 from .. import object_description_options
 from ... import sphinx_utils
+
+
+if sys.version_info[:2] >= (3, 11):
+    Ref = docutils.nodes.reference
+else:
+    Ref = docutils.nodes.Element
 
 
 def _monkey_patch_python_domain_to_add_object_synopses_to_references():
@@ -43,7 +50,7 @@ def _monkey_patch_python_domain_to_add_object_synopses_to_references():
         target: str,
         node: sphinx.addnodes.pending_xref,
         contnode: docutils.nodes.Element,
-    ) -> Optional[docutils.nodes.Element]:
+    ) -> Optional[Ref]:
         refnode = orig_resolve_xref(
             self, env, fromdocname, builder, typ, target, node, contnode
         )
@@ -63,7 +70,7 @@ def _monkey_patch_python_domain_to_add_object_synopses_to_references():
         target: str,
         node: sphinx.addnodes.pending_xref,
         contnode: docutils.nodes.Element,
-    ) -> List[Tuple[str, docutils.nodes.Element]]:
+    ) -> List[Tuple[str, Ref]]:
         results = orig_resolve_any_xref(
             self, env, fromdocname, builder, target, node, contnode
         )

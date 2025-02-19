@@ -77,27 +77,27 @@ def _monkey_patch_cpp_domain_symbol_resolution_through_type_aliases():
 
     def _find_named_symbols(
         self: Symbol,
-        identOrOp: Union[
+        ident_or_op: Union[
             sphinx.domains.cpp.ASTIdentifier, sphinx.domains.cpp.ASTOperator
         ],
-        templateParams: Any,
-        templateArgs: sphinx.domains.cpp.ASTTemplateArgs,
-        templateShorthand: bool,
-        matchSelf: bool,
-        recurseInAnon: bool,
-        correctPrimaryTemplateArgs: bool,
-        searchInSiblings: bool,
+        template_params: Any,
+        template_args: sphinx.domains.cpp.ASTTemplateArgs,
+        template_shorthand: bool,
+        match_self: bool,
+        recurse_in_anon: bool,
+        correct_primary_template_args: bool,
+        search_in_siblings: bool,
     ) -> Iterator[Symbol]:
         results = orig_find_named_symbols(
             self,
-            identOrOp,
-            templateParams,
-            templateArgs,
-            templateShorthand,
-            matchSelf,
-            recurseInAnon,
-            correctPrimaryTemplateArgs,
-            searchInSiblings,
+            ident_or_op,
+            template_params,
+            template_args,
+            template_shorthand,
+            match_self,
+            recurse_in_anon,
+            correct_primary_template_args,
+            search_in_siblings,
         )
         found_match = False
         for result in results:
@@ -107,21 +107,21 @@ def _monkey_patch_cpp_domain_symbol_resolution_through_type_aliases():
         if found_match:
             return
 
-        if not templateShorthand:
+        if not template_shorthand:
             return
 
-        if templateParams is not None or templateArgs is not None:
+        if template_params is not None or template_args is not None:
             # Try match again, ignoring template params and args.
             results = orig_find_named_symbols(
                 self,
-                identOrOp,
+                ident_or_op,
                 None,  # type: ignore[arg-type]
                 None,  # type: ignore[arg-type]
-                templateShorthand,
-                matchSelf,
-                recurseInAnon,
-                correctPrimaryTemplateArgs,
-                searchInSiblings,
+                template_shorthand,
+                match_self,
+                recurse_in_anon,
+                correct_primary_template_args,
+                search_in_siblings,
             )
             for result in results:
                 found_match = True
@@ -135,17 +135,46 @@ def _monkey_patch_cpp_domain_symbol_resolution_through_type_aliases():
             if resolved_symbol is self:
                 continue
             yield from resolved_symbol._find_named_symbols(
+                ident_or_op,
+                template_params,
+                template_args,
+                template_shorthand,
+                match_self,
+                recurse_in_anon,
+                False,
+                False,
+            )
+
+    if sphinx.version_info < (8, 2):
+
+        def _find_named_symbols_legacy(
+            self: Symbol,
+            identOrOp: Union[
+                sphinx.domains.cpp.ASTIdentifier, sphinx.domains.cpp.ASTOperator
+            ],
+            templateParams: Any,
+            templateArgs: sphinx.domains.cpp.ASTTemplateArgs,
+            templateShorthand: bool,
+            matchSelf: bool,
+            recurseInAnon: bool,
+            correctPrimaryTemplateArgs: bool,
+            searchInSiblings: bool,
+        ):
+            return _find_named_symbols(
+                self,
                 identOrOp,
                 templateParams,
                 templateArgs,
                 templateShorthand,
                 matchSelf,
                 recurseInAnon,
-                correctPrimaryTemplateArgs=False,
-                searchInSiblings=False,
+                correctPrimaryTemplateArgs,
+                searchInSiblings,
             )
 
-    Symbol._find_named_symbols = _find_named_symbols  # type: ignore[assignment]
+        Symbol._find_named_symbols = _find_named_symbols_legacy  # type: ignore[assignment]
+    else:
+        Symbol._find_named_symbols = _find_named_symbols  # type: ignore[assignment]
 
     in_symbol_lookup_with_shorthand = []
 
@@ -153,21 +182,53 @@ def _monkey_patch_cpp_domain_symbol_resolution_through_type_aliases():
 
     def _symbol_lookup(
         self,
-        nestedName,
-        templateDecls,
-        onMissingQualifiedSymbol,
-        strictTemplateParamArgLists: bool,
-        ancestorLookupType: str,
-        templateShorthand: bool,
-        matchSelf: bool,
-        recurseInAnon: bool,
-        correctPrimaryTemplateArgs: bool,
-        searchInSiblings: bool,
+        nested_name,
+        template_decls,
+        on_missing_qualified_symbol,
+        strict_template_param_arg_lists: bool,
+        ancestor_lookup_type: str,
+        template_shorthand: bool,
+        match_self: bool,
+        recurse_in_anon: bool,
+        correct_primary_template_args: bool,
+        search_in_siblings: bool,
     ):
         try:
-            in_symbol_lookup_with_shorthand.append(templateShorthand)
+            in_symbol_lookup_with_shorthand.append(template_shorthand)
 
             return orig_symbol_lookup(
+                self,
+                nested_name,
+                template_decls,
+                on_missing_qualified_symbol,
+                strict_template_param_arg_lists,
+                ancestor_lookup_type,
+                template_shorthand,
+                match_self,
+                recurse_in_anon,
+                correct_primary_template_args,
+                search_in_siblings,
+            )
+
+        finally:
+            in_symbol_lookup_with_shorthand.pop()
+
+    if sphinx.version_info < (8, 2):
+
+        def _symbol_lookup_legacy(
+            self,
+            nestedName,
+            templateDecls,
+            onMissingQualifiedSymbol,
+            strictTemplateParamArgLists: bool,
+            ancestorLookupType: str,
+            templateShorthand: bool,
+            matchSelf: bool,
+            recurseInAnon: bool,
+            correctPrimaryTemplateArgs: bool,
+            searchInSiblings: bool,
+        ):
+            return _symbol_lookup(
                 self,
                 nestedName,
                 templateDecls,
@@ -181,10 +242,9 @@ def _monkey_patch_cpp_domain_symbol_resolution_through_type_aliases():
                 searchInSiblings,
             )
 
-        finally:
-            in_symbol_lookup_with_shorthand.pop()
-
-    Symbol._symbol_lookup = _symbol_lookup  # type: ignore[assignment]
+        Symbol._symbol_lookup = _symbol_lookup_legacy  # type: ignore[assignment]
+    else:
+        Symbol._symbol_lookup = _symbol_lookup  # type: ignore[assignment]
 
     orig_find_identifier = Symbol.find_identifier
 

@@ -19,7 +19,8 @@ class HighlightPushDirective(sphinx.util.docutils.SphinxDirective):
 
     def run(self) -> List[docutils.nodes.Node]:
         stack = self.env.temp_data.setdefault("highlight_language_stack", [])
-        stack.append(self.env.temp_data.get("highlight_language"))
+        if stack is not None:
+            stack.append(self.env.temp_data.get("highlight_language"))
         return [sphinx.addnodes.highlightlang(push=True)]
 
 

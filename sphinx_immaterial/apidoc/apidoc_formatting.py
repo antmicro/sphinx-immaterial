@@ -139,13 +139,22 @@ def visit_productionlist(
         super_func(self, node)
     except docutils.nodes.SkipNode:
         pass
-    # be sure that there wasn't an incompatible change to sphinx
-    assert self.body[before_len].endswith("<pre>\n") and self.body[-1].startswith(
-        "</pre>"
-    )
+    assert self.body[before_len].endswith("<pre>\n")
     self.body[before_len] += "<code>"
+
+
+@html_translator_mixin.override
+def depart_productionlist(
+    self: html_translator_mixin.HTMLTranslatorMixin,
+    node: sphinx.addnodes.productionlist,
+    super_func: html_translator_mixin.BaseVisitCallback[sphinx.addnodes.productionlist],
+):
+    try:
+        super_func(self, node)
+    except docutils.nodes.SkipNode:
+        pass
+    assert self.body[-1].startswith("</pre>")
     self.body[-1] = "</code>" + self.body[-1]
-    raise docutils.nodes.SkipNode()
 
 
 @html_translator_mixin.init

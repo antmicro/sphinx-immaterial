@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.116bfe6baf097be33.min.css?v=ee6a936f" />
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.2481436ea7e29c808.min.css?v=af9806a7" />
         <link rel="stylesheet" type="text/css" href="_static/extra_css.css?v=15999537" />
         <link rel="stylesheet" type="text/css" href="_static/custom_font_example.css?v=520ac564" />
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -1442,16 +1442,16 @@ reStructuredText used to create these examples.</p>
 <span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Adds support for obtaining property types from docstring signatures, and</span>
 <span class="sd">improves formatting by PyProperty of type annotations.&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
-<span class="kn">import</span> <span class="nn">sphinx</span>
-<span class="kn">import</span> <span class="nn">sphinx.addnodes</span>
-<span class="kn">import</span> <span class="nn">sphinx.domains</span>
-<span class="kn">import</span> <span class="nn">sphinx.domains.python</span>
-<span class="kn">import</span> <span class="nn">sphinx.ext.autodoc</span>
-<span class="kn">import</span> <span class="nn">sphinx.util.inspect</span>
-<span class="kn">import</span> <span class="nn">sphinx.util.typing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.addnodes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.domains</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.domains.python</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.ext.autodoc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.util.inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sphinx.util.typing</span>
 
 <span class="k">if</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
     <span class="n">stringify_annotation</span> <span class="o">=</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">typing</span><span class="o">.</span><span class="n">stringify_annotation</span>
@@ -1464,7 +1464,7 @@ reStructuredText used to create these examples.</p>
 <span class="n">property_sig_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^(</span><span class="se">\\</span><span class="s2">(.*)</span><span class="se">\\</span><span class="s2">)</span><span class="se">\\</span><span class="s2">s*-&gt;</span><span class="se">\\</span><span class="s2">s*(.*)$&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_get_property_getter</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_property_getter</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
     <span class="c1"># property</span>
     <span class="n">func</span> <span class="o">=</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">inspect</span><span class="o">.</span><span class="n">safe_getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;fget&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1473,7 +1473,7 @@ reStructuredText used to create these examples.</p>
     <span class="k">return</span> <span class="n">func</span>
 
 
-<span class="k">def</span> <span class="nf">_get_return_type_from_fget_doc</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_return_type_from_fget_doc</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="n">fget</span> <span class="o">=</span> <span class="n">_get_property_getter</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">fget</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -1489,12 +1489,12 @@ reStructuredText used to create these examples.</p>
     <span class="k">return</span> <span class="n">retann</span>
 
 
-<span class="k">def</span> <span class="nf">apply_property_documenter_type_annotation_fix</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">apply_property_documenter_type_annotation_fix</span><span class="p">():</span>
     <span class="c1"># Modify PropertyDocumenter to support obtaining signature from docstring.</span>
 
     <span class="n">orig_import_object</span> <span class="o">=</span> <span class="n">PropertyDocumenter</span><span class="o">.</span><span class="n">import_object</span>
 
-    <span class="k">def</span> <span class="nf">import_object</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">PropertyDocumenter</span><span class="p">,</span> <span class="n">raiseerror</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">import_object</span><span class="p">(</span><span class="bp">self</span><span class="p">:</span> <span class="n">PropertyDocumenter</span><span class="p">,</span> <span class="n">raiseerror</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">orig_import_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raiseerror</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -1525,7 +1525,7 @@ reStructuredText used to create these examples.</p>
 
     <span class="n">old_add_directive_header</span> <span class="o">=</span> <span class="n">PropertyDocumenter</span><span class="o">.</span><span class="n">add_directive_header</span>
 
-    <span class="k">def</span> <span class="nf">add_directive_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_directive_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">start_line</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directive</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="n">old_add_directive_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">)</span>
 
@@ -1548,7 +1548,7 @@ reStructuredText used to create these examples.</p>
     <span class="c1"># Modify PyProperty to improve formatting of :type: option</span>
     <span class="n">PyProperty</span> <span class="o">=</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">PyProperty</span>
 
-    <span class="k">def</span> <span class="nf">handle_signature</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_signature</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">signode</span><span class="p">:</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">addnodes</span><span class="o">.</span><span class="n">desc_signature</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="n">fullname</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PyProperty</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">handle_signature</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">signode</span><span class="p">)</span>
@@ -1584,7 +1584,7 @@ reStructuredText used to create these examples.</p>
 
 <span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">python</span>
 
-   <span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+   <span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">():</span>
    <span class="w">    </span><span class="sd">&quot;&quot;&quot;Greet.&quot;&quot;&quot;</span>
        <span class="k">return</span> <span class="s2">&quot;Hello World&quot;</span>
 
@@ -1604,7 +1604,7 @@ reStructuredText used to create these examples.</p>
 <span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Greet.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="s2">&quot;Hello World&quot;</span>
 </code></pre></div>
@@ -1996,24 +1996,24 @@ This is a reference to the grammar for a <span class="na">:token:</span><span cl
 </div>
 <div class="result docutils container">
 <pre>
-<code><strong id="grammar-token-graph">graph     </strong> ::=  [ strict ] (<a class="reference internal" href="#grammar-token-graph" title="graph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">graph</span></code></a> | digraph) [ ID ] '{' <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> '}'
-<strong id="grammar-token-stmt_list">stmt_list </strong> ::=  [ <a class="reference internal" href="#grammar-token-stmt" title="stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt</span></code></a> [ ';' ] <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> ]
-<strong id="grammar-token-stmt">stmt      </strong> ::=  <a class="reference internal" href="#grammar-token-node_stmt" title="node_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_stmt</span></code></a>
-                <a class="reference internal" href="#grammar-token-edge_stmt" title="edge_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edge_stmt</span></code></a>
-                <a class="reference internal" href="#grammar-token-attr_stmt" title="attr_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_stmt</span></code></a>
-                ID '=' ID
-                <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>
-<strong id="grammar-token-attr_stmt">attr_stmt </strong> ::=  (<a class="reference internal" href="#grammar-token-graph" title="graph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">graph</span></code></a> | node | edge) <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a>
-<strong id="grammar-token-attr_list">attr_list </strong> ::=  '[' [ <a class="reference internal" href="#grammar-token-a_list" title="a_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">a_list</span></code></a> ] ']' [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
-<strong id="grammar-token-a_list">a_list    </strong> ::=  ID '=' ID [ (';' | ',') ] [ <a class="reference internal" href="#grammar-token-a_list" title="a_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">a_list</span></code></a> ]
-<strong id="grammar-token-edge_stmt">edge_stmt </strong> ::=  (<a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> | <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>) <a class="reference internal" href="#grammar-token-edgeRHS" title="edgeRHS (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edgeRHS</span></code></a> [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
-<strong id="grammar-token-edgeRHS">edgeRHS   </strong> ::=  edgeop (<a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> | <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>) [ <a class="reference internal" href="#grammar-token-edgeRHS" title="edgeRHS (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edgeRHS</span></code></a> ]
-<strong id="grammar-token-node_stmt">node_stmt </strong> ::=  <a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
-<strong id="grammar-token-node_id">node_id   </strong> ::=  ID [ <a class="reference internal" href="#grammar-token-port" title="port (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">port</span></code></a> ]
-<strong id="grammar-token-port">port      </strong> ::=  ':' ID [ ':' <a class="reference internal" href="#grammar-token-compass_pt" title="compass_pt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">compass_pt</span></code></a> ]
-                ':' <a class="reference internal" href="#grammar-token-compass_pt" title="compass_pt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">compass_pt</span></code></a>
-<strong id="grammar-token-subgraph">subgraph  </strong> ::=  [ <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a> [ ID ] ] '{' <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> '}'
-<strong id="grammar-token-compass_pt">compass_pt</strong> ::=  (n | ne | e | se | s | sw | w | nw | c | _)
+<code><strong id="grammar-token-graph">graph</strong>      ::= [ strict ] (<a class="reference internal" href="#grammar-token-graph" title="graph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">graph</span></code></a> | digraph) [ ID ] '{' <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> '}'
+<strong id="grammar-token-stmt_list">stmt_list</strong>  ::= [ <a class="reference internal" href="#grammar-token-stmt" title="stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt</span></code></a> [ ';' ] <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> ]
+<strong id="grammar-token-stmt">stmt</strong>       ::= <a class="reference internal" href="#grammar-token-node_stmt" title="node_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_stmt</span></code></a>
+               <a class="reference internal" href="#grammar-token-edge_stmt" title="edge_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edge_stmt</span></code></a>
+               <a class="reference internal" href="#grammar-token-attr_stmt" title="attr_stmt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_stmt</span></code></a>
+               ID '=' ID
+               <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>
+<strong id="grammar-token-attr_stmt">attr_stmt</strong>  ::= (<a class="reference internal" href="#grammar-token-graph" title="graph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">graph</span></code></a> | node | edge) <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a>
+<strong id="grammar-token-attr_list">attr_list</strong>  ::= '[' [ <a class="reference internal" href="#grammar-token-a_list" title="a_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">a_list</span></code></a> ] ']' [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
+<strong id="grammar-token-a_list">a_list</strong>     ::= ID '=' ID [ (';' | ',') ] [ <a class="reference internal" href="#grammar-token-a_list" title="a_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">a_list</span></code></a> ]
+<strong id="grammar-token-edge_stmt">edge_stmt</strong>  ::= (<a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> | <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>) <a class="reference internal" href="#grammar-token-edgeRHS" title="edgeRHS (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edgeRHS</span></code></a> [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
+<strong id="grammar-token-edgeRHS">edgeRHS</strong>    ::= edgeop (<a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> | <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a>) [ <a class="reference internal" href="#grammar-token-edgeRHS" title="edgeRHS (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">edgeRHS</span></code></a> ]
+<strong id="grammar-token-node_stmt">node_stmt</strong>  ::= <a class="reference internal" href="#grammar-token-node_id" title="node_id (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">node_id</span></code></a> [ <a class="reference internal" href="#grammar-token-attr_list" title="attr_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">attr_list</span></code></a> ]
+<strong id="grammar-token-node_id">node_id</strong>    ::= ID [ <a class="reference internal" href="#grammar-token-port" title="port (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">port</span></code></a> ]
+<strong id="grammar-token-port">port</strong>       ::= ':' ID [ ':' <a class="reference internal" href="#grammar-token-compass_pt" title="compass_pt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">compass_pt</span></code></a> ]
+               ':' <a class="reference internal" href="#grammar-token-compass_pt" title="compass_pt (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">compass_pt</span></code></a>
+<strong id="grammar-token-subgraph">subgraph</strong>   ::= [ <a class="reference internal" href="#grammar-token-subgraph" title="subgraph (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">subgraph</span></code></a> [ ID ] ] '{' <a class="reference internal" href="#grammar-token-stmt_list" title="stmt_list (grammar token)"><code class="xref docutils literal notranslate"><span class="pre">stmt_list</span></code></a> '}'
+<strong id="grammar-token-compass_pt">compass_pt</strong> ::= (n | ne | e | se | s | sw | w | nw | c | _)
 </code></pre>
 <p>This is a reference to the grammar for a <a class="reference internal" href="#grammar-token-graph" title="graph (grammar token)"><code class="xref std std-token docutils literal notranslate"><span class="pre">graph</span></code></a> in dot syntax.</p>
 </div>
@@ -2041,7 +2041,7 @@ This is a reference to the grammar for a <span class="na">:token:</span><span cl
   <small>
     
       Last update:
-      Dec 05, 2024
+      Feb 20, 2025
     
   </small>
 </div>
@@ -2118,7 +2118,7 @@ This is a reference to the grammar for a <span class="na">:token:</span><span cl
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    8.1.3.
+    8.2.0.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
